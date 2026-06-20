@@ -76,7 +76,7 @@ public class CanvasRegionizedWorldData {
         this.regionData = regionData;
         this.level = level;
 
-        final RegionizedWorldData worldData = TickRegionScheduler.getCurrentRegionizedWorldData();
+        final RegionizedWorldData worldData = regionData.getWorldRegionizedData();
 
         this.tpsbar = new RegionizedTpsBar(worldData);
         this.rambar = new RegionizedRamBar(worldData);

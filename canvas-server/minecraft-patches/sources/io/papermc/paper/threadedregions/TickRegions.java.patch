@@ -1,0 +1,16 @@
+--- a/io/papermc/paper/threadedregions/TickRegions.java
++++ b/io/papermc/paper/threadedregions/TickRegions.java
+@@ -186,6 +_,13 @@
+             return this.getOrCreateRegionizedData(((ApiRegionizedData<T>) regionizedData).backend());
+         }
+ 
++        // Canvas - resolve this region's world data without relying on the thread-local current ticking
++        // region, which is null while the regioniser splits/merges regions and would poison lazily-created
++        // regionised data (e.g. the tps/ram bars) with a null world reference
++        public RegionizedWorldData getWorldRegionizedData() {
++            return this.getOrCreateRegionizedData(this.world.worldRegionData);
++        }
++
+         @Override
+         public io.canvasmc.canvas.region.RegionThreadingTickManager.RegionHandle getTickManager() {
+             return new io.canvasmc.canvas.tick.ServerRegionTickManager.ServerRegionHandle(region.getData().getRegionSchedulingHandle().getTickManager());
